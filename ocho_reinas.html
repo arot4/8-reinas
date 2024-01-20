@@ -32,12 +32,36 @@
 
         function colocarReina(celda) {
         //alert("click reina" + celda);
+        var renglon = celda.parentElement.rowIndex;
+        var columna = celda.cellIndex;
+        //alert("renglon: " + renglon + " columna: " + columna);
         if (window.getComputedStyle(celda).backgroundImage != "none") {
           celda.style = "background-image: none;";
           reinasColocadas--;
           reinasRestantes++;
           document.getElementById("reinasColocadas").innerHTML = reinasColocadas;
           document.getElementById("reinasRestantes").innerHTML = reinasRestantes;
+          var tablero = document.getElementById("chessBoard");
+            for (var i = 0; i < 8; i++) {
+                if(i != columna){
+                    tablero.rows[renglon].cells[i].style.backgroundColor = "";
+                } 
+                if(i != renglon){
+                    tablero.rows[i].cells[columna].style.backgroundColor = "";
+                }
+                if (renglon + i < 8 && columna + i < 8) {
+                    tablero.rows[renglon + i].cells[columna + i].style.backgroundColor = "";
+                }
+                if (renglon - i >= 0 && columna - i >= 0) {
+                    tablero.rows[renglon - i].cells[columna - i].style.backgroundColor = "";
+                }
+                if (renglon + i < 8 && columna - i >= 0) {
+                    tablero.rows[renglon + i].cells[columna - i].style.backgroundColor = "";
+                }
+                if (renglon - i >= 0 && columna + i < 8) {
+                    tablero.rows[renglon - i].cells[columna + i].style.backgroundColor = "";
+                }
+            }
         } else {
           if (reinasColocadas < 8) {
             celda.style ="background-image: url(./img/reina1.png); background-size:cover;";
@@ -45,8 +69,30 @@
             reinasRestantes--;
             document.getElementById("reinasColocadas").innerHTML = reinasColocadas;
             document.getElementById("reinasRestantes").innerHTML = reinasRestantes;
-          }
+            var tablero = document.getElementById("chessBoard");
+            for (var i = 0; i < 8; i++) {
+                if(i != columna){
+                    tablero.rows[renglon].cells[i].style.backgroundColor = "#FF0000";
+                } 
+                if(i != renglon){
+                    tablero.rows[i].cells[columna].style.backgroundColor = "#FF0000";
+                }
+                if (renglon + i < 8 && columna + i < 8) {
+                    tablero.rows[renglon + i].cells[columna + i].style.backgroundColor = "#FF0000";
+                }
+                if (renglon - i >= 0 && columna - i >= 0) {
+                    tablero.rows[renglon - i].cells[columna - i].style.backgroundColor = "#FF0000";
+                }
+                if (renglon + i < 8 && columna - i >= 0) {
+                    tablero.rows[renglon + i].cells[columna - i].style.backgroundColor = "#FF0000";
+                }
+                if (renglon - i >= 0 && columna + i < 8) {
+                    tablero.rows[renglon - i].cells[columna + i].style.backgroundColor = "#FF0000";
+                }
+                celda.style.backgroundColor = "";
+            }
         }
+    }
       }
     </script>
 </head>
@@ -58,7 +104,7 @@
     <p>Reinas amenazadas: <span id="reinasAmenazadas">0</span></p>
 </div>
     <body>
-        <table>
+        <table id="chessBoard">
             <tr>
                 <td onclick="colocarReina(this)"></td>
                 <td onclick="colocarReina(this)"></td>
@@ -144,4 +190,4 @@
 
     </body>
 
-</html>
+</html> 
